@@ -13,7 +13,7 @@
 
 // Your code goes here...
 
-
+const allItems = document.querySelectorAll('.item')
 
 /**
  * @task
@@ -24,7 +24,7 @@
 
 // Your code goes here
 
-
+const main = document.getElementById('main')
 
 /**
  * @task
@@ -35,7 +35,7 @@
 
 // Your code goes here
 
-
+const favs = document.getElementById('favs')
 
 /**
  * @task
@@ -48,7 +48,17 @@
 
 // Your code goes here
 
-
+function updateCollections(id, direction) {
+  const toDirection = direction === 'toMain' ? main : favs;
+  const heartStatus = direction === 'toMain' ? 'fa-heart-circle-plus' : 'fa-heart-crack'
+  for (const item of allItems) {
+    if (item.id === id) {
+      const prevClass = item.children[0].classList[1]
+      item.children[0].classList.replace(prevClass, heartStatus);
+      toDirection.append(item)
+    }
+  }
+}
 
 /**
  * @task
@@ -66,4 +76,9 @@
 
 // Your code goes here...
 
-
+allItems.forEach(item => {
+    item.addEventListener('click', function(){
+      const wantedDestination = this.parentElement.id === 'main' ? 'toFavs' : 'toMain';
+      updateCollections(this.id, wantedDestination)
+    })
+})
