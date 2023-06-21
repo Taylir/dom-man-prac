@@ -23,6 +23,23 @@
  * * Make all the items that are listed in the favorites LS save the red background color when the page is reloaded
  */
 
+function favoriteCheck(e) {
+  const item = e.target;
+  if (
+    item.dataset.fav == "false" &&
+    Array.from(item.classList).includes("card")
+  ) {
+    item.dataset.fav = "true";
+    item.style.backgroundColor = "red";
+  } else if (
+    item.dataset.fav == "true" &&
+    Array.from(item.classList).includes("card")
+  ) {
+    item.dataset.fav = "false";
+    item.style.backgroundColor = "white";
+  }
+}
+
 /**
  * @hint
  * Here is a plan of how you can structure your code. You can follow it or choose your own way to go
@@ -38,3 +55,9 @@
  */
 
 // Your code goes here...
+
+const cardContainer = document.querySelector(".cardsContainer");
+
+localStorage.setItem("Pie", cardContainer);
+
+cardContainer.addEventListener("click", favoriteCheck);
