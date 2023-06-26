@@ -31,12 +31,14 @@ function favoriteCheck(e) {
   ) {
     item.dataset.fav = "true";
     item.style.backgroundColor = "red";
+    favsArray.add(+item.id);
   } else if (
     item.dataset.fav == "true" &&
     Array.from(item.classList).includes("card")
   ) {
     item.dataset.fav = "false";
     item.style.backgroundColor = "white";
+    favsArray.delete(+item.id);
   }
 }
 
@@ -58,6 +60,22 @@ function favoriteCheck(e) {
 
 const cardContainer = document.querySelector(".cardsContainer");
 
-localStorage.setItem("Pie", cardContainer);
+const favsArray = new Set();
 
-cardContainer.addEventListener("click", favoriteCheck);
+cardContainer.addEventListener("click", (e) => {
+  favoriteCheck(e);
+  console.log(favsArray);
+  localStorage.setItem("favorites", JSON.stringify(Array.from(favsArray)));
+});
+
+const savedFavs = new Set(JSON.parse(localStorage.getItem("favorites")));
+
+console.log(Array.from(cardContainer.children), savedFavs);
+
+for (let i = 0; i < cardContainer.children.length; i++) {
+  if (savedFavs.has(+cardContainer.children[i].id)) {
+    cardContainer.children[i].dataset.fav = "true";
+    cardContainer.children[i].style.backgroundColor = "red";
+    favsArray.add(+cardContainer.children[i].id);
+  }
+}
