@@ -64,13 +64,10 @@ const favsArray = new Set();
 
 cardContainer.addEventListener("click", (e) => {
   favoriteCheck(e);
-  console.log(favsArray);
   localStorage.setItem("favorites", JSON.stringify(Array.from(favsArray)));
 });
 
 const savedFavs = new Set(JSON.parse(localStorage.getItem("favorites")));
-
-console.log(Array.from(cardContainer.children), savedFavs);
 
 for (let i = 0; i < cardContainer.children.length; i++) {
   if (savedFavs.has(+cardContainer.children[i].id)) {
